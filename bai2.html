@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="data"></h1>
+    <script>
+        let a ="1"; b ="2";c ="10";d ="21";
+
+        // cách 1: hiển thị dữ liệu trên hộp thoại:
+        // alert(a+b-c/d);
+
+        // cách 2: hiển thị ở Inspect:
+        // console.log(a+b-c/d);
+
+        // cách 3: hiển thị ở trên web:
+        //document.write(a+b-c/d);
+
+        // cách 4: hiển thi vào thẻ h1
+        document.getElementById("data").innerHTML = a+b-c/d;
+
+    </script>
+</body>
+</html>
