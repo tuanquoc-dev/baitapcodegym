@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let year = parseInt(prompt("nhap so nam ban muon nhap"));
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                if (year % 400 == 0) {
+                    alert(year + "la nam nhuan");
+                } else {
+                    alert(year + "khong la nam nhuan");
+                }
+            } else {
+                alert(year + " la nam nhuan");
+            }
+        } else {
+            alert(year + "khong la nam nhuan");
+        }
+
+
+    </script>
+</body>
+
+</html>

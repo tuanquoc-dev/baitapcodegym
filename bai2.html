@@ -6,9 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 id="data"></h1>
+    <input type="text" id="data" oninput="showdata()">
+    <h1 id="show"></h1>
     <script>
-        let a ="1"; b ="2";c ="10";d ="21";
+        // let a ="1"; b ="2";c ="10";d ="21";
 
         // cách 1: hiển thị dữ liệu trên hộp thoại:
         // alert(a+b-c/d);
@@ -20,8 +21,12 @@
         //document.write(a+b-c/d);
 
         // cách 4: hiển thi vào thẻ h1
-        document.getElementById("data").innerHTML = a+b-c/d;
+        //document.getElementById("data").innerHTML = a+b-c/d;
 
+        function showdata(){
+            let a = document.getElementById("data").value;
+            document.getElementById("show").innerHTML = a;
+        }
     </script>
 </body>
 </html>

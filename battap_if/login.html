@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập if else if</title>
+</head>
+<body>
+    <script>
+        let username = prompt ("nhap vao ten tai khoan");
+
+        if (username == "Admin"){
+            let passwd = prompt ("nhap mat khau")
+            if (passwd == "TheMaster"){
+                alert("Welcome");
+            }else if (passwd == null){
+                alert("Canceled");
+            }else {
+                alert("Wrong password");
+            }
+    
+        
+        } else if (username == "null"){
+            alert("Canceled");
+        } else {
+            alert("I don’t know you");
+        }
+
+      
+    </script>
+</body>
+</html>
