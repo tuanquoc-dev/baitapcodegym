@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Giải phương trình bậc 2</title>
+</head>
+
+<body>
+    <script>
+        let a = +prompt("nhap so a: ")
+        let b = +prompt("nhap so b: ")
+        let c = +prompt("nhap so c: ")
+
+        if (a == 0) {
+            alert("đây k phải là pt bậc 2");
+        } else {
+            let delta = b * b - 4 * a * c
+
+            if (delta > 0){
+                let x1= (-b + Math.sqrt(delta))/(2*a)
+                let x2= (-b - Math.sqrt(delta))/(2*a)
+                alert("pt có nghiệm thứ 1: "+ x1 + "pt có nghiệm thứ 2: "+ x2);
+                
+            }else if(delta == 0){
+                let x = -b/(2*a)
+                alert("pt có 1 nghiệm kép: "+ x);
+            }else {
+                alert("pt vô nghiệm");
+            } 
+        }
+    </script>
+</body>
+
+</html>

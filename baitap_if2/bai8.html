@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let age = parseInt(prompt("Nhập vào số tuổi của bạn: "))
+        if (isNaN(age)) {// kiểm tra xem giá trị có phải là một số hay không
+            alert("Yêu cầu nhập số!!");
+        } else {
+            let a = age
+            if (age < 120 && age > 0)
+                alert("tuổi của bạn là: "+ a);
+            else{
+                alert("đây k phải là tuổi của bạn.");
+            }
+        }
+    </script>
+</body>
+
+</html>

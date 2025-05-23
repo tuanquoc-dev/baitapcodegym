@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tính tiền điện</title>
+</head>
+<body>
+    <script>
+        let soDien = +prompt("Nhập vào số điện (kWh):");
+        let tien = 0;
+
+        if (soDien < 0 || isNaN(soDien)) {
+            alert("Số điện không hợp lệ.");
+        } else {
+            if (soDien <= 50) {
+                tien = soDien * 1728;
+            } else if (soDien <= 100) {
+                tien = 50 * 1728 + (soDien - 50) * 1786;
+            } else if (soDien <= 200) {
+                tien = 50 * 1728 + 50 * 1786 + (soDien - 100) * 2074;
+            } else if (soDien <= 300) {
+                tien = 50 * 1728 + 50 * 1786 + 100 * 2074 + (soDien - 200) * 2612;
+            } else if (soDien <= 400) {
+                tien = 50 * 1728 + 50 * 1786 + 100 * 2074 + 100 * 2612 + (soDien - 300) * 2919;
+            } else {
+                tien = 50 * 1728 + 50 * 1786 + 100 * 2074 + 100 * 2612 + 100 * 2919 + (soDien - 400) * 3015;
+            }
+
+            alert("Tiền điện tháng này là: " + tien.toLocaleString() + " VNĐ");
+        }
+    </script>
+</body>
+</html>
