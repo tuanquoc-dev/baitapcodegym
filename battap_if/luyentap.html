@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập đk 1</title>
+</head>
+
+<body>
+    <script>
+        // Bài 1:Nhập hai số a và b, kiểm tra xem a có chia hết cho b hay không.
+        // let a = +prompt("nhập a:")
+        // let b = +prompt("nhập b:")
+        // let bieu_thuc= a%b
+        // if (isNaN(a) || isNaN(b)) {
+        //     alert("Vui lòng nhập hai số hợp lệ.");
+        // }else if (b == 0){
+        //     alert("Không hợp lệ");
+        // }else {
+        //     if (bieu_thuc === 0){
+        //         alert("Biểu thức chia hết cho nhau");
+        //     }else{
+
+        //         alert("Hai số không chia hết cho nhau ");
+        //     }
+        // }
+
+        // Bài 2: Nhập tuổi, kiểm tra và in kết quả xem học sinh có đủ điều kiện vào học lớp 10 hay không
+
+        // let age = +prompt("Nhập tuổi của bạn: ")
+        // if (isNaN(age) ) {
+        //     alert("Vui lòng nhập hai số hợp lệ.");
+        // } else if (age >= 15 && age <= 18) {
+        //     alert("Đủ điều kiện vào lớp 10");
+        // } else {
+        //     alert("Không đủ điểu kiện vào lớp 10");
+        // }
+
+        // Bài 3: Nhập một số nguyên bất kỳ, in ra kết quả để xác định số đó lớn hơn, nhỏ hơn hay bằng 0.
+
+        // let a = +prompt("Nhập số nguyên: ")
+
+        // if (a > 0){
+        //     alert("Số này lớn hơn 0");
+        // }else if (a < 0){
+        //     alert("Số này bé hơn 0");
+        // }else{
+        //     alert("Số này bằng 0");
+        // }
+
+        // Bài 4: Nhập 3 số nguyên, tìm và in ra giá trị lớn nhất trong ba số đó.
+
+        // let a = +prompt("nhập a: ")
+        // let b = +prompt("nhập b: ")
+        // let c = +prompt("nhập c: ")
+
+        // if (a > b && a > c) {
+        //     alert("Số a là số lớn nhất");
+        // } else if (b > a && b > c) {
+        //     alert("Số b là số lớn nhất");
+        // } else {
+        //     alert("Số c là số lớn nhất");
+        // }
+
+
+        // Bài 5:
+        // Xếp loại học lực của học sinh dựa trên:
+        // Điểm bài kiểm tra.
+        // Điểm thi giữa kỳ.
+        // Điểm thi cuối kỳ.
+
+
+
+        // let diem_ktr = +prompt("Nhập điểm bài kiểm tra:")
+        // let diem_gk = +prompt("Nhập điểm thi giữa kỳ:")
+        // let diem_ck = +prompt("Nhập điểm thi cuối kỳ:")
+
+
+        // if (isNaN(diem_ktr) && isNaN(diem_gk) && isNaN(diem_ck)) {
+        //     alert("Không hợp lệ");
+        // } else {
+        //     let diem_tb = (diem_ktr + diem_gk * 2 + diem_ck * 3) / 6
+        //     if (diem_tb > 0 && diem_tb <= 4) {
+        //         alert("Học sinh Yếu");
+        //     } else if (diem_tb > 4 && diem_tb <= 6) {
+        //         alert("Học sinh TB");
+        //     } else if (diem_tb > 6 && diem_tb <= 8) {
+        //         alert("Học sinh Khá");
+        //     } else if (diem_tb > 8 && diem_tb <= 10) {
+        //         alert("Học sinh Giỏi");
+        //     }
+        // }
+
+
+
+        // Bài 6: Tính hoa hồng nhận được dựa trên mức doanh số bán hàng:
+
+        // let Doanh_so = +prompt("Nhập số doanh số bán hàng(triệu VND): ")
+
+        // if (isNaN(Doanh_so) || Doanh_so < 0){
+        //     alert("Vui lòng nhập lại");
+        // }else{
+        //     let Hoa_hong=0
+        //     if (Doanh_so < 100){
+        //         let Hoa_hong = Doanh_so * 0.03
+        //         alert("Số hoa hồng nhận được là: " + Hoa_hong);
+        //     }else if (Doanh_so>100 && Doanh_so<=300){
+        //         let Hoa_hong = Doanh_so * 0.05
+        //         alert("Số hoa hồng nhận được là: " + Hoa_hong + "triệu VND");
+        //     }else if (Doanh_so>300 && Doanh_so<=500){
+        //         let Hoa_hong = Doanh_so * 0.07
+        //         alert("Số hoa hồng nhận được là: " + Hoa_hong + "triệu VND");
+        //     }else if (Doanh_so>500){
+        //         let Hoa_hong = Doanh_so * 0.1
+        //         alert("Số hoa hồng nhận được là: " + Hoa_hong + "triệu VND");
+        //     }
+        // }
+
+
+        // Bài 7: Tính cước điện thoại cho một hộ gia đình dựa trên các thông số được cung cấp:
+
+        const noi_mang = 1000;
+        const ngoai_mang = 1200;
+        const phi_thue_bao_co_dinh = 25000;
+
+        let phut_noi_mang = +prompt("Nhập số phút gọi nội mạng: ")
+        let phut_ngoai_mang = +prompt("Nhập số phút gọi ngoại mạng: ")
+
+        if (isNaN(phut_noi_mang) || isNaN(phut_ngoai_mang) || phut_noi_mang < 0 || phut_ngoai_mang < 0) {
+            alert("Không hợp lệ!!");
+        } else {
+            let tien_noi_mang = phut_noi_mang * noi_mang
+            let tien_ngoai_mang = phut_ngoai_mang * ngoai_mang
+            let tong_cuoc = tien_noi_mang + tien_ngoai_mang + phi_thue_bao_co_dinh
+
+            alert("Tổng cước hộ gia đình phải trả là: " + tong_cuoc +"VND.");
+        }
+    </script>
+</body>
+
+</html>
