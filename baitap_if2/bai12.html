@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lãi kép</title>
+</head>
+
+<body>
+    <script>
+    
+        // Khai báo biến đầu vào
+        let soTienBanDau = 10000000;        // 10 triệu
+        let soThang = 12;                   // 12 tháng
+        let laiSuatHangThang = 1;           // 1% mỗi tháng
+
+        // Kiểm tra điều kiện hợp lệ
+        if (soTienBanDau <= 0) {
+            console.log("❌ Số tiền ban đầu phải lớn hơn 0");
+        } else if (soThang <= 0) {
+            console.log("❌ Số tháng phải lớn hơn 0");
+        } else if (laiSuatHangThang < 0) {
+            console.log("❌ Lãi suất không được âm");
+        } else {
+            // Tính lãi kép
+            let laiSuat = laiSuatHangThang / 100;
+            let tongSoTien = soTienBanDau * Math.pow(1 + laiSuat, soThang);
+
+            // In kết quả
+            console.log("✅ Tổng số tiền sau", soThang, "tháng là:", tongSoTien.toFixed(0), "VNĐ");
+        }
+    </script>
+</body>
+
+</html>

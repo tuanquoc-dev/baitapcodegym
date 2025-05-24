@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chương trình tính thuế thu nhập cá nhân</title>
+</head>
+
+<body>
+    <script>
+        let thu_nhap = +prompt("Nhập thu nhập của bạn(triệu VND); ")
+
+        if (isNaN(thu_nhap) || thu_nhap < 0) {
+            alert("Vui lòng nhập lại");
+        } else {
+            if (thu_nhap < 5) {
+                let thue_phai_nop = thu_nhap
+                alert("Thuế thu nhập cá nhân của bạn là: " + thue_phai_nop + "triệu VND");
+            } else if (thu_nhap > 5 && thu_nhap <= 10) {
+                let thue_phai_nop = thu_nhap * 0.05
+                alert("Thuế thu nhập cá nhân của bạn là: " + thue_phai_nop + "triệu VND");
+            } else if (thu_nhap > 10 && thu_nhap <= 18) {
+                let thue_phai_nop = thu_nhap * 0.1
+                alert("Thuế thu nhập cá nhân của bạn là: " + thue_phai_nop + "triệu VND");
+            } else if (thu_nhap > 18 && thu_nhap <= 32) {
+                let thue_phai_nop = thu_nhap * 0.15
+                alert("Thuế thu nhập cá nhân của bạn là: " + thue_phai_nop + "triệu VND");
+            } else if (thu_nhap > 32 && thu_nhap <= 52) {
+                let thue_phai_nop = thu_nhap * 0.2
+                alert("Thuế thu nhập cá nhân của bạn là: " + thue_phai_nop + "triệu VND");
+            } else if (thu_nhap > 52 && thu_nhap <= 80) {
+                let thue_phai_nop = thu_nhap * 0.25
+                alert("Thuế thu nhập cá nhân của bạn là: " + thue_phai_nop + "triệu VND");
+            } else {
+                let thue_phai_nop = thu_nhap * 0.3
+                alert("Thuế thu nhập cá nhân của bạn là: " + thue_phai_nop + "triệu VND");
+            }
+        }
+    </script>
+</body>
+
+</html>
