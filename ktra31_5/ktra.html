@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra</title>
+</head>
+
+<body>
+    <script>
+        // 1. Nêu các cách khai báo biến:
+        /* 
+        Có 3 cách:
+        let a = 8
+        var a = 8
+        const a = 9
+        */
+        // 2.Các kiểu dữ liệu đã được học(Nêu ví dụ về giá trị của chúng):
+        /*
+        Có 3 kiểu dữ liệu:
+        string: "hello"
+        bolean: true,false
+        kiểu số: 1,2,4
+        arry: [1,2,34]
+        */
+
+        // 3.Làm sao để quy định kiểu dữ liệu cho 1 biến ?
+
+        // Bằng cách là gán dữ liệu cho biến đó
+        //vd như: let name = "John";        // kiểu string
+        // let age = 25;             // kiểu number
+        // let isStudent = true;     // kiểu boolean
+        // let scores = [90, 80, 100]; // kiểu array
+
+
+
+        // 4. Có những cách nào để hiển thị chữ hello ra từ JS(kèm ví dụ)
+        //Có 3 cách hiển thị ra js: alert(), document.write(), console.log()
+
+        // alert('hello');
+
+        // 5. Có những cách nào để nhập vào biến a với JS(kèm ví dụ):
+        // Có 3 cách:
+
+        // let a = +prompt("Nhập a: ");
+        // alert(a);
+
+        // var a = +prompt("nhập a: ");
+        // console.log(a);
+
+
+        // 6, In ra gia diện tương ứng thẻ h1, img, a từ JS(Ví dụ thay 1 link bất kì từ Js cho thẻ a):
+
+        // AA. Tạo thẻ h1
+        // let h1 = document.createElement("h1");
+        // h1.textContent = "Đây là tiêu đề tạo từ JavaScript";
+        // document.body.appendChild(h1);
+
+        // BB. Tạo thẻ img
+        // let img = document.createElement("img");
+        // img.src = "https://via.placeholder.com/150"; // ảnh mẫu
+        // img.alt = "Ảnh mẫu";
+        // img.style.width = "150px"; // style tuỳ chọn
+        // document.body.appendChild(img);
+
+        // CC. Tạo thẻ a (liên kết)
+        // let a = document.createElement("a");
+        // a.href = "https://www.google.com"; // link bất kỳ
+        // a.textContent = "Truy cập Google";
+        // a.target = "_blank"; // mở trong tab mới
+        // document.body.appendChild(a);
+
+        // 7. Nhập vào đường dẫn ảnh cho biến một biến bất kì, sau đó in ra ảnh với nguồn ảnh đó:
+
+        // Nhập đường dẫn ảnh từ người dùng
+        // let imageUrl = prompt("Nhập đường dẫn ảnh:");
+
+        // // Tạo thẻ <img>
+        // let img = document.createElement("img");
+        // img.src = imageUrl;
+        // img.alt = "Ảnh do người dùng cung cấp";
+        // img.style.width = "300px"; // bạn có thể chỉnh chiều rộng nếu muốn
+
+        // // Thêm ảnh vào trang
+        // document.body.appendChild(img);
+
+
+        // 8. Nhập vào tuổi trong biến age, in ra 'Đủ tuổi' nếu age >= 18:
+
+
+        // let age = +prompt("Nhập tuổi: ");
+        // if (isNaN(age) || age < 0){
+        //     alert("Mời nhập lại");
+        // }else{
+        //      if(age >= 18){
+        //     alert("Đủ tuổi");
+        // }else if(age > 0 && age < 18){
+        //     alert("Không đủ tuổi");
+        // }
+        // }
+
+
+        // 9. Nhập vào a, b.Nếu a > b in ra tổng, nếu a < b in ra tích, nếu a = b in ra 'a=b'
+
+        // let a = +prompt("Nhập a: ");
+        // let b = +prompt("Nhập b: ");
+
+        // let sum = a + b;
+        // let tich = a * b;
+        // let bang = a == b;
+        // if (a > b){
+        //     alert(sum);
+        // }else if (a < b){
+        //     alert(tich);
+        // }else if(a == b){
+        //     alert(bang);
+        // }
+        // 10. Nhập a, b, c.In ra số lớn nhất:
+
+
+        // let a = +prompt("nhập a: ");
+        // let b = +prompt("nhập b: ");
+        // let c = +prompt("nhập c: ");
+
+
+
+        // if (a > b && a > c){
+        //   alert(a);
+        // }else  if (b > a && b > c){
+        //     alert(b);
+        // }else if (c > a && c > b){
+        //     alert(c);
+        // }
+
+
+        // 11. In ra 100 với các lượt lẻ thì in ra 'Hello', và chẵn in ra 'Hi':
+
+        // for(let i = 1; i <= 100; i++){
+        //     if (i % 2 == 0){
+        //         console.log("Hi");
+        //     }else {
+        //         console.log("Hello");
+        //     }
+        // }
+
+
+        // 12. Nhập vào N từ prompt.In ra N lần chữ 'Hello':
+
+        // let n = +prompt("Nhập N:");
+
+        // if (!isNaN(n) && n > 0) {
+        //     for (let i = 0; i < n; i++) {
+        //         console.log("hello");
+        //     }
+        // }else {
+        //     console.log("Mời bạn nhập lại.");
+        // }
+
+        // 13. In ra các số từ a đến b(nâng cao a, b nhập từ input):
+
+        // let a = +prompt("Nhập a:");
+        // let b = +prompt("Nhập b:");
+
+        // for (let i = a; i <= b; i++){
+        //     console.log(i);
+        // }
+
+
+        // 14. In ra các số từ a đến b, số chẵn trong h2 và số lẻ trong h1:
+
+        // let a = +prompt("Nhập a: ");
+        // let b = +prompt("Nhập b: ");
+
+        // for(let i = a; i <= b; i++){
+        //     if (i % 2 == 0){
+        //         document.write("<h2> Số chẵn </h2>");
+        //     }else {
+        //         document.write("<h1> Số lẻ </h1>");
+        //     }
+        // }
+
+
+        // 15. Tính trung bình cộng các số chia 5 dư 2 từ a đến b:
+
+        // let a = +prompt("Nhập a: ");
+        // let b = +prompt("Nhập b: ");
+        // let sum = 0;
+        // let count = 0;
+        // for (let i = a; i <= b; i++) {
+        //     if (i % 5 == 2){
+        //         sum += i;
+        //         count ++;
+        //     }
+        // }
+        // let avr = sum/count;
+        // console.log(avr);
+
+
+        // 16. Cho 1 mảng bất kì.In ra các phần tử chẵn trong h2, lẻ trong h1 trong mảng:
+
+        // let a = [ 2,3,4,6,8,9];
+
+        // for (let i = 0; i < a.length; i++){
+        //     if (a[i] % 2 == 0){
+        //         document.write("<h2>" + a[i] + "</h2>");
+        //     }else {
+        //         document.write("<h1>" + a[i] + "</h1>");
+        //     }
+        // }
+
+        // 17. Tính trung bình cộng các số chia 5 dư 2 các phần tử trong mảng:
+
+        // let numbers = [10,11,12,13,14,15,16,17,18,19,20];
+        // let sum = 0;
+        // let count = 0;
+        // for (let i = 0; i <= numbers.length ; i++){
+        //     if (numbers[i] % 5 == 2){
+        //         sum += numbers[i];
+        //         count++;
+        //     }
+        // }
+        // let arv = sum/count;
+        // console.log(arv);
+
+
+        // 18. Cho một mảng bất kì đếm số lượng số nguyên tố có trong mảng:
+
+        // let numbers = [10,11,12,13,14,15,16,17,18,19,20];
+
+        // for(let i = 0; i < numbers.length; i++){
+        //     if (numbers[i] % )
+        // }
+
+
+        // 19. Nhập vao a, tìm vị trí của a trong mảng:
+
+        // let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        // let a = +prompt("Nhập từ 1-10: ");
+
+        // for (let i = 0; i < arr.length; i++) {
+        //     if (a == arr[i]) {
+        //         alert(i);
+        //         break;
+        //     }
+        // }
+        // if (a !== arr[i]){
+        //     alert("không tìm thấy vị trí trong mảng");
+        // }
+
+        // Nâng cao:
+        // 20.Tìm min thứ hai trong mảng.
+        // 21. Tìm min của các phần tử chẵn trong mảng.
+        // 22. Tìm các vị trí của min trong mảng.
+
+
+
+    </script>
+</body>
+
+</html>
