@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>luyện tập 1</title>
+</head>
+
+<body>
+
+
+
+    <!-- <table border="1" id="table">
+ 
+    </table> -->
+    <script>
+        // Bài 1: Sử dụng vòng lặp để đếm từ 1 đến 100. Khi số là 99, hiển thị hộp thoại thông báo là đã hoàn thành.
+        // for (let i = 1; i <= 100; i++) {
+        //     console.log(i);
+        //     if (i == 99) {
+        //         console.log("đã hoàn thành");
+        //         break;
+        //     }
+
+        // }
+
+        // Bài 2: Sử dụng hàm prompt() để lấy thông tin nhiệt độ hiện tại được nhập bởi người truy cập.
+        // Nếu nhiệt độ nhập vào trên 100, yêu cầu người dùng giảm nhiệt độ.
+        // Nếu nhiệt độ dưới 20, yêu cầu người dùng tăng nhiệt độ.
+
+
+        // while(true){
+        //     let nhiet_do = +prompt("Mời bạn nhập nhiệt độ: ")
+        //     if (nhiet_do > 100){
+        //         alert("Người dùng giảm nhiệt độ đi");
+        //     }else if (nhiet_do < 20){
+        //         alert("Người dùng tăng nhiệt độ lên");
+        //     }else {
+        //         alert("Nhập đúng rồi");
+        //         break;
+        //     }
+        // }
+
+        // Bài bảng cửu chương:
+        // let html = ""
+        // for(let i = 1; i <= 10; i++){
+        //     let dong = "<tr>";
+        //     for(let j = 1; j <= 10; j++ ){
+        //         // dong += "<td>" + j + "x" + i + "=" + (j*i) + "</td>";
+        //         dong += `<td> ${j} x ${i} = ${j*i} </td>`
+        //     }
+        //     dong += "</tr>";
+        //     html += dong;
+        // }
+        // document.getElementById("table").innerHTML = html
+
+
+        // Bài 3: 0 1 1 2 3 5 8 13 21
+        // let number1 = 0
+        // let number2 = 1
+        // console.log(number1);
+        // console.log(number2);
+        // let count = 1
+        // while(count < 19){
+        //     let fib = number1 + number2
+        //     console.log(fib);//2
+        //     count++;
+        //     number1= number2
+        //     number2=fib
+        // }
+
+        // Bài 7: Hãy viết một chương trình in ra các số từ 1 đến 100. Nhưng nếu số chia hết cho 3 thì in ra "Fizz", 5 thì in ra "Buzz" thay vì in ra số đó.
+        // Và nếu số đó chia hết cho cả 3 và 5 thì in ra chữ "FizzBuzz"
+
+        // for(i = 1; i <= 100; i++){
+        //     if (i % 3 == 0 && i % 5 == 0){
+        //         console.log("FizzBuzz");
+        //     }else if (i % 3 == 0){
+        //         console.log("Fizz");
+        //     }else if (i % 5 == 0){
+        //         console.log("Buzz");
+        //     }else {
+        //         console.log(i);
+        //     }
+        // }
+
+        // Bài 8:
+
+        // let min = +prompt("Nhập vào số bé nhất: ")
+        // let max = +prompt("Nhập vào số lớn nhất: ")
+        // let numberRandom = Math.floor(Math.random() * (max - min + 1)+ min)
+        // let count = 0
+        // while (true){
+        //     let customerNumber = +prompt("Nhập vào số: ")
+        //     if (customerNumber > numberRandom){
+        //         alert("Số này quá lớn");
+        //     }else if (customerNumber < numberRandom){
+        //         alert("Số này quá bé");
+        //     }else if (customerNumber == numberRandom){
+        //         alert("Bạn đã win");
+        //         break;
+        //     }else if (count == 3){
+        //         alert("gà");
+        //         break;
+        //     }
+        //     count++;
+        // }
+
+        // Bài 4: Tìm số đầu tiên trong dãy fibonacci chia hết cho 5.
+
+        // let number1 = 0
+        // let number2 = 1
+        // let count = 0
+        // while (true) {
+        //     let fib = number1 + number2
+        //     if (fib % 5 == 0) {
+        //         console.log(fib);
+        //         break;
+        //     }
+        //     count++;
+        //     number1 = number2
+        //     number2 = fib
+        // }
+
+        // Bài 5: Tính tổng của 20 số đầu tiên trong dãy fibonacci:
+
+        let number1 = 0;
+        let number2 = 1;
+        let sum = number1 + number2; // bắt đầu với 2 số đầu tiên
+
+        console.log(number1);
+        console.log(number2);
+
+        for (let i = 3; i <= 20; i++) { // bắt đầu từ số thứ 3 đến số thứ 20
+            let fib = number1 + number2;
+            console.log(fib);
+            sum += fib;
+            number1 = number2;
+            number2 = fib;
+        }
+
+        console.log("Tổng của 20 số đầu tiên trong dãy Fibonacci là:", sum);
+
+
+
+    </script>
+</body>
+
+</html>
