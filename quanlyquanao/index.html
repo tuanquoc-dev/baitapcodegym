@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thời trang nam</title>
+    <style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to right, #f0f2f5, #e0ecff);
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: #2c3e50;
+    }
+
+    .button-group, .actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 10px 16px;
+        background: #2980b9;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+        background: #1f618d;
+        transform: scale(1.05);
+    }
+
+    table {
+        width: 90%;
+        margin: auto;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th {
+        background: #3498db;
+        color: white;
+        padding: 12px;
+    }
+
+    td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    img {
+        width: 100px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    input[type="text"], input[type="number"] {
+        padding: 8px;
+        margin: 6px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        width: 250px;
+        box-sizing: border-box;
+    }
+
+    #ux div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>
+
+
+
+
+</head>
+
+<body>
+    <center>
+        <h1>Quản Lý Quần Áo</h1>
+
+        <button onclick="navigateToHomePage()">Trang chủ</button>
+        <button onclick="navigateToAdd()">Thêm mới</button>
+
+
+        <div id="ux">
+
+        </div>
+
+    </center>
+
+    <script src="clothing.js"></script>
+    <script src="store.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
