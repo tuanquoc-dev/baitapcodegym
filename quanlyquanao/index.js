@@ -10,19 +10,24 @@ function navigateToHomePage() {
   }
 
   let actionHeader = "";
-  let addButton = "";
+  let buttonGroup = "";
 
   if (user.role === "admin") {
     actionHeader = `<th colspan="2">Action</th>`;
+    buttonGroup += `<button onclick="navigateToAdd()">Thêm mới</button>`;
   }
 
+  if (user.role === "viewer") {
+    actionHeader = `<th>Mua</th>`;
+  }
+
+  buttonGroup += `<button onclick="logout()">Đăng xuất</button>`;
+
   let html = `
-        <button onclick="navigateToHomePage()">Trang chủ</button>
-        <button onclick="navigateToAdd()">Thêm mới</button>
+    <button onclick="navigateToHomePage()">Trang chủ</button>
     <h2>Chào ${user.username} (${user.role})</h2>
     <div class="button-group">
-        ${addButton}
-        <button onclick="logout()">Đăng xuất</button>
+        ${buttonGroup}
     </div>
     <input type="text" placeholder="Tìm kiếm" id="search-input" oninput="search()">
     <input type="number" placeholder="Giá bắt đầu" id="price-start" oninput="search()">
@@ -49,10 +54,10 @@ function navigateToHomePage() {
   `;
 
   document.getElementById("ux").innerHTML = html;
-
   myStore.getDateInStorage();
   getAll(myStore.getListProduct());
 }
+
 
 function getAll(list) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -67,16 +72,20 @@ function getAll(list) {
           <td>${product.size}</td>
           <td>${product.price}</td>
           <td>${product.quantity}</td>
-          ${
-            user.role === "admin"
-              ? `
+          `;
+
+    if (user.role === "admin") {
+      html += `
               <td><button onClick="navigateToUpdate(${product.id})">Edit</button></td>
               <td><button onClick="deleteProduct(${product.id})">Delete</button></td>
-          `
-              : ""
-          }
-      </tr>
-    `;
+          `;
+    } else if (user.role === "viewer") {
+      html += `
+            <td><button onclick="buyProduct(${product.id})">Mua</button></td>
+       `;
+    }
+
+    html += `</tr>`;
   }
 
   document.getElementById("ui").innerHTML = html;
@@ -275,6 +284,34 @@ function register() {
   localStorage.setItem("users", JSON.stringify(users));
   alert("Đăng kí thành công!");
   navigateToLogin();
+}
+
+
+function buyProduct(id) {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  if (!user) {
+    alert("Vui lòng đăng nhập trước khi mua hàng.");
+    navigateToLogin();
+    return;
+  }
+
+  const product = myStore.getListProduct().find(p => p.id == id);
+  if (!product) {
+    alert("Không tìm thấy sản phẩm.");
+    return;
+  }
+
+  let html = `
+    <h2>Thông tin sản phẩm đã mua</h2>
+    <p><strong>Người mua:</strong> ${user.username}</p>
+    <p><strong>Tên sản phẩm:</strong> ${product.name}</p>
+    <p><strong>Ảnh:</strong><br><img src="${product.image}" width="150" style="border-radius: 8px;"></p>
+    <p><strong>Size:</strong> ${product.size}</p>
+    <p><strong>Giá:</strong> ${product.price} VND</p>
+    <button onclick="navigateToHomePage()">Quay lại</button>
+  `;
+
+  document.getElementById("ux").innerHTML = html;
 }
 
 navigateToHomePage();
