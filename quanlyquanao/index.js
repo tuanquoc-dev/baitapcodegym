@@ -15,6 +15,7 @@ function navigateToHomePage() {
   if (user.role === "admin") {
     actionHeader = `<th colspan="2">Action</th>`;
     buttonGroup += `<button onclick="navigateToAdd()">Thêm mới</button>`;
+    buttonGroup += `<button onclick="viewPurchaseInfo()">Xem mua hàng</button>`;
   }
 
   if (user.role === "viewer") {
@@ -58,7 +59,6 @@ function navigateToHomePage() {
   getAll(myStore.getListProduct());
 }
 
-
 function getAll(list) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
   let html = "";
@@ -80,9 +80,11 @@ function getAll(list) {
               <td><button onClick="deleteProduct(${product.id})">Delete</button></td>
           `;
     } else if (user.role === "viewer") {
-      html += `
-            <td><button onclick="buyProduct(${product.id})">Mua</button></td>
-       `;
+      if (product.quantity > 0) {
+        html += `<td><button onclick="buyProduct(${product.id})">Mua</button></td>`;
+      } else {
+        html += `<td><span style="color: red; font-weight: bold;">Hết hàng</span></td>`;
+      }
     }
 
     html += `</tr>`;
@@ -223,14 +225,14 @@ function login() {
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let users = JSON.parse(localStorage.getItem("users")) || []; //Lấy thông tin người dùng nhập vào
 
   let user = users.find(
-    (u) => u.username === username && u.password === password && u.role === role
+    (u) => u.username === username && u.password === password && u.role === role // Lấy danh sách người dùng đăng kí từ localstorage.
   );
 
   if (!user) {
-    alert("Sai thông tin đăng nhập!");
+    alert("Sai thông tin đăng nhập!"); // Kiểm tra người dùng có tồn tại trong danh sách hay không(đúng tên, mật khẩu, role).
     return;
   }
 
@@ -272,45 +274,119 @@ function register() {
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let users = JSON.parse(localStorage.getItem("users")) || []; // Lấy danh sách người dùng hiện tại
 
+  // Nếu username đã tồn tại => báo
   let existed = users.find((u) => u.username === username);
   if (existed) {
     alert("Tài khoản đã tồn tại!");
     return;
   }
 
+  //thêm người dùng mới vào danh sách vào localstorage.
   users.push({ username, password, role });
   localStorage.setItem("users", JSON.stringify(users));
   alert("Đăng kí thành công!");
   navigateToLogin();
 }
 
-
 function buyProduct(id) {
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  if (!user) {
-    alert("Vui lòng đăng nhập trước khi mua hàng.");
-    navigateToLogin();
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser || currentUser.role !== "viewer") {
+    alert("Chỉ người dùng được phép mua.");
     return;
   }
 
-  const product = myStore.getListProduct().find(p => p.id == id);
-  if (!product) {
-    alert("Không tìm thấy sản phẩm.");
+  let products = myStore.getListProduct();
+  let product = products.find(p => p.id === id);
+
+  if (product.quantity <= 0) {
+    alert("Sản phẩm đã hết hàng!");
+    return;
+  }
+
+  // Trừ số lượng đi 1
+  product.quantity -= 1;
+  myStore.update(product.id, product);
+
+  // Lưu lịch sử mua
+  let purchases = JSON.parse(localStorage.getItem("purchases")) || [];
+  let existing = purchases.find(p => p.username === currentUser.username && p.productId === product.id);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    purchases.push({
+      username: currentUser.username,
+      productId: product.id,
+      productName: product.name,
+      productImage: product.image,
+      size: product.size,
+      price: product.price,
+      quantity: 1
+    });
+  }
+  localStorage.setItem("purchases", JSON.stringify(purchases));
+
+  // Hiển thị lại giao diện
+  viewPurchaseDetail(product, currentUser.username);
+}
+
+function viewPurchaseDetail(product, username) {
+  document.getElementById("ux").innerHTML = `
+    <h2>Thông tin sản phẩm đã mua</h2>
+    <p><strong>Tài khoản:</strong> ${username}</p>
+    <p><strong>Tên sản phẩm:</strong> ${product.name}</p>
+    <p><strong>Ảnh:</strong><br><img src="${product.image}" width="150"></p>
+    <p><strong>Size:</strong> ${product.size}</p>
+    <p><strong>Giá:</strong> ${product.price} VND</p>
+    <br>
+    <button onclick="navigateToHomePage()">Quay lại</button>
+  `;
+}
+
+function viewPurchaseInfo() {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  if (!user || user.role !== "admin") {
+    alert("Chỉ admin mới được xem thông tin mua hàng.");
+    return;
+  }
+
+  const purchases = JSON.parse(localStorage.getItem("purchases")) || [];
+
+  if (purchases.length === 0) {
+    document.getElementById(
+      "ux"
+    ).innerHTML = `<h2>Không có dữ liệu mua hàng</h2>`;
     return;
   }
 
   let html = `
-    <h2>Thông tin sản phẩm đã mua</h2>
-    <p><strong>Người mua:</strong> ${user.username}</p>
-    <p><strong>Tên sản phẩm:</strong> ${product.name}</p>
-    <p><strong>Ảnh:</strong><br><img src="${product.image}" width="150" style="border-radius: 8px;"></p>
-    <p><strong>Size:</strong> ${product.size}</p>
-    <p><strong>Giá:</strong> ${product.price} VND</p>
-    <button onclick="navigateToHomePage()">Quay lại</button>
+    <h2>Thông Tin Mua Hàng</h2>
+    <table border="1" style="width: 90%; margin: auto; border-collapse: collapse;">
+      <tr style="background-color: #3498db; color: white;">
+        <th>Tài khoản</th>
+        <th>Tên sản phẩm</th>
+        <th>Ảnh</th>
+        <th>Size</th>
+        <th>Giá</th>
+        <th>Số lượng</th>
+      </tr>
   `;
 
+  purchases.forEach((p) => {
+    html += `
+      <tr>
+        <td>${p.username}</td>
+        <td>${p.productName}</td>
+        <td><img src="${p.productImage}" width="100"></td>
+        <td>${p.size}</td>
+        <td>${p.price}</td>
+        <td>${p.quantity}</td>
+      </tr>
+    `;
+  });
+
+  html += `</table><br><center><button onclick="navigateToHomePage()">Quay lại</button></center>`;
   document.getElementById("ux").innerHTML = html;
 }
 

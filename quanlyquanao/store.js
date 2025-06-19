@@ -50,8 +50,6 @@ getListSearch(nameSearch, priceStart, priceEnd, sizeFilter) {
   return listOutput3;
 }
 
-
-
   getListProduct() {
     return this.listProduct;
   }
