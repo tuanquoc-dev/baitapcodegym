@@ -17,6 +17,8 @@ function navigateToHomePage() {
   }
 
   let html = `
+        <button onclick="navigateToHomePage()">Trang chủ</button>
+        <button onclick="navigateToAdd()">Thêm mới</button>
     <h2>Chào ${user.username} (${user.role})</h2>
     <div class="button-group">
         ${addButton}
@@ -51,7 +53,6 @@ function navigateToHomePage() {
   myStore.getDateInStorage();
   getAll(myStore.getListProduct());
 }
-
 
 function getAll(list) {
   const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -100,6 +101,7 @@ function search() {
 
 function navigateToAdd() {
   document.getElementById("ux").innerHTML = `
+  <button onclick="navigateToHomePage()">Trang chủ</button>
         <h2>Thêm sản phẩm</h2>
         <div>
         <input type="text" placeholder="Tên sản phẩm" id="name">
@@ -187,29 +189,41 @@ function navigateToLogin() {
     <div>
         <input type="text" id="username" placeholder="Tên đăng nhập">
         <br><br>
+        <input type="password" id="password" placeholder="Mật khẩu">
+        <br><br>
         <select id="role">
             <option value="admin">Admin</option>
             <option value="viewer">Viewer</option>
         </select>
         <br><br>
-        <button onclick="login()">Đăng nhập</button>
+       <div class="button-login-group">
+         <button onclick="login()">Đăng nhập</button>
+         <button onclick="navigateToRegister()">Đăng ký</button>
+       </div>
     </div>
   `;
 }
 
 function login() {
-  const username = document.getElementById("username").value.trim();
-  const role = document.getElementById("role").value;
+  let username = document.getElementById("username").value.trim();
+  let password = document.getElementById("password").value.trim();
+  let role = document.getElementById("role").value;
 
-  if (!username) {
-    alert("Vui lòng nhập tên đăng nhập!");
+  if (!username || !password) {
+    alert("Vui lòng nhập tên và mật khẩu!");
     return;
   }
 
-  const user = {
-    username: username,
-    role: role,
-  };
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  let user = users.find(
+    (u) => u.username === username && u.password === password && u.role === role
+  );
+
+  if (!user) {
+    alert("Sai thông tin đăng nhập!");
+    return;
+  }
 
   localStorage.setItem("currentUser", JSON.stringify(user));
   navigateToHomePage();
@@ -217,6 +231,49 @@ function login() {
 
 function logout() {
   localStorage.removeItem("currentUser");
+  navigateToLogin();
+}
+
+function navigateToRegister() {
+  document.getElementById("ux").innerHTML = `
+    <h2>Đăng kí tài khoản</h2>
+    <div>
+        <input type="text" id="reg-username" placeholder="Tên đăng nhập">
+        <br><br>
+        <input type="password" id="reg-password" placeholder="Mật khẩu">
+        <br><br>
+        <select id="reg-role">
+            <option value="admin">Admin</option>
+            <option value="viewer">Viewer</option>
+        </select>
+        <br><br>
+        <button onclick="register()">Đăng kí</button>
+        <button onclick="navigateToLogin()">Quay lại</button>
+    </div>
+  `;
+}
+
+function register() {
+  let username = document.getElementById("reg-username").value.trim();
+  let password = document.getElementById("reg-password").value.trim();
+  let role = document.getElementById("reg-role").value;
+
+  if (!username || !password) {
+    alert("Vui lòng nhập đầy đủ thông tin!");
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  let existed = users.find((u) => u.username === username);
+  if (existed) {
+    alert("Tài khoản đã tồn tại!");
+    return;
+  }
+
+  users.push({ username, password, role });
+  localStorage.setItem("users", JSON.stringify(users));
+  alert("Đăng kí thành công!");
   navigateToLogin();
 }
 
