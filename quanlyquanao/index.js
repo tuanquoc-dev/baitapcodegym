@@ -3,58 +3,98 @@ console.log("myStore", myStore);
 navigateToHomePage();
 
 function navigateToHomePage() {
-  document.getElementById("ux").innerHTML = `
-    <h2>Danh sách sản phẩm</h2>
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  if (!user) {
+    navigateToLogin();
+    return;
+  }
+
+  let actionHeader = "";
+  let addButton = "";
+
+  if (user.role === "admin") {
+    actionHeader = `<th colspan="2">Action</th>`;
+  }
+
+  let html = `
+    <h2>Chào ${user.username} (${user.role})</h2>
+    <div class="button-group">
+        ${addButton}
+        <button onclick="logout()">Đăng xuất</button>
+    </div>
     <input type="text" placeholder="Tìm kiếm" id="search-input" oninput="search()">
     <input type="number" placeholder="Giá bắt đầu" id="price-start" oninput="search()">
     <input type="number" placeholder="Giá kết thúc" id="price-end" oninput="search()">
-    <br>
-    <br>
-            <table border="1">
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Size</th>
-                    <th>Price</th>
-                    <th colspan="2">Action</th>
-                </tr>
-         <tbody id="ui">       
-         </tbody>
-            </table>
-    `;
+    <select id="size-filter" onchange="search()">
+        <option value="">Tất cả size</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+    </select>
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Size</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            ${actionHeader}
+        </tr>
+        <tbody id="ui"></tbody>
+    </table>
+  `;
+
+  document.getElementById("ux").innerHTML = html;
+
   myStore.getDateInStorage();
-  let list = myStore.getListProduct(); // Mảng product
-  console.log("list", list);
-  getAll(list);
+  getAll(myStore.getListProduct());
 }
 
+
 function getAll(list) {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
   let html = "";
-  for (let i = 0; i < list.length; i++) {
-    let product = list[i];
+
+  for (let product of list) {
     html += `
-               <tr>
-                    <td>${product.id}</td>
-                    <td>${product.name}</td>
-                    <td><img src="${product.image}" alt=""></td>
-                    <td>${product.size}</td>
-                    <td>${product.price}</td>
-                    <td><button onClick="navigateToUpdate(${product.id})">Edit</button></td>
-                    <td><button onClick=" deleteProduct(${product.id})" >Delete</button></td>
-                </tr>
-        `;
+      <tr>
+          <td>${product.id}</td>
+          <td>${product.name}</td>
+          <td><img src="${product.image}"></td>
+          <td>${product.size}</td>
+          <td>${product.price}</td>
+          <td>${product.quantity}</td>
+          ${
+            user.role === "admin"
+              ? `
+              <td><button onClick="navigateToUpdate(${product.id})">Edit</button></td>
+              <td><button onClick="deleteProduct(${product.id})">Delete</button></td>
+          `
+              : ""
+          }
+      </tr>
+    `;
   }
+
   document.getElementById("ui").innerHTML = html;
 }
 
 function search() {
-  let nameSearch = document.getElementById("search-input").value;
+  let name = document.getElementById("search-input").value.toLowerCase().trim();
   let priceStart = +document.getElementById("price-start").value;
   let priceEnd = +document.getElementById("price-end").value;
-  if (!priceStart) priceStart = -Infinity;
-  if (!priceEnd) priceEnd = Infinity;
-  let list = myStore.getListSearch(nameSearch, priceStart, priceEnd);
+  let size = document.getElementById("size-filter").value;
+
+  if (!priceStart) {
+    priceStart = -Infinity;
+  }
+  if (!priceEnd) {
+    priceEnd = Infinity;
+  }
+
+  let list = myStore.getListSearch(name, priceStart, priceEnd, size);
   getAll(list);
 }
 
@@ -74,6 +114,9 @@ function navigateToAdd() {
         <input type="text" placeholder="Giá sản phẩm" id="price">
         <br>
         <br>
+        <input type="text" placeholder="Số lượng sản phẩm" id="quantity">
+        <br>
+        <br>
         <button onclick=" addProduct()">Thêm</button>
         </div>
     `;
@@ -86,9 +129,10 @@ function addProduct() {
   let name = document.getElementById("name").value;
   let image = document.getElementById("image").value;
   let size = document.getElementById("size").value;
-  let price = document.getElementById("price").value;
+  let price = Number(document.getElementById("price").value);
+  let quantity = Number(document.getElementById("quantity").value);
 
-  let p = new Clothing(id, name, image, size, price);
+  let p = new Clothing(id, name, image, size, price, quantity);
   myStore.addProduct(p);
   navigateToHomePage();
 }
@@ -106,14 +150,14 @@ function updateProduct(id) {
   let image = document.getElementById("image").value;
   let size = document.getElementById("size").value;
   let price = document.getElementById("price").value;
-  let p = new Clothing(id, name, image, size, price);
+  let quantity = document.getElementById("quantity").value;
+  let p = new Clothing(id, name, image, size, price, quantity);
   myStore.update(id, p);
   navigateToHomePage();
 }
 
 function navigateToUpdate(id) {
-  // hiển hị dữ liệu cũ
-  let product = myStore.getProductById(id); // new Product(1, "Bánh mì", 3000, 30);
+  let product = myStore.getProductById(id);
   document.getElementById("ux").innerHTML = `
         <h2>Thêm sản phẩm</h2>
         <div>
@@ -129,9 +173,51 @@ function navigateToUpdate(id) {
         <input type="text" placeholder="Giá sản phẩm" id="price" value="${product.price}">
         <br>
         <br>
+        <input type="text" placeholder="Số lượng sản phẩm" id="quantity" value="${product.quantity}">
+        <br>
+        <br>
         <button onclick="updateProduct(${id})">Sửa</button>
         </div>
     `;
+}
+
+function navigateToLogin() {
+  document.getElementById("ux").innerHTML = `
+    <h2>Đăng nhập</h2>
+    <div>
+        <input type="text" id="username" placeholder="Tên đăng nhập">
+        <br><br>
+        <select id="role">
+            <option value="admin">Admin</option>
+            <option value="viewer">Viewer</option>
+        </select>
+        <br><br>
+        <button onclick="login()">Đăng nhập</button>
+    </div>
+  `;
+}
+
+function login() {
+  const username = document.getElementById("username").value.trim();
+  const role = document.getElementById("role").value;
+
+  if (!username) {
+    alert("Vui lòng nhập tên đăng nhập!");
+    return;
+  }
+
+  const user = {
+    username: username,
+    role: role,
+  };
+
+  localStorage.setItem("currentUser", JSON.stringify(user));
+  navigateToHomePage();
+}
+
+function logout() {
+  localStorage.removeItem("currentUser");
+  navigateToLogin();
 }
 
 navigateToHomePage();
