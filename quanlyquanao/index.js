@@ -25,6 +25,7 @@ function navigateToHomePage() {
   buttonGroup += `<button onclick="logout()">Đăng xuất</button>`;
 
   let html = `
+    <h1>🛍️ Quản Lý Quần Áo</h1>
     <button onclick="navigateToHomePage()">Trang chủ</button>
     <h2>Chào ${user.username} (${user.role})</h2>
     <div class="button-group">
@@ -259,6 +260,7 @@ function navigateToRegister() {
         </select>
         <br><br>
         <button onclick="register()">Đăng kí</button>
+        <br>
         <button onclick="navigateToLogin()">Quay lại</button>
     </div>
   `;
@@ -291,44 +293,40 @@ function register() {
 }
 
 function buyProduct(id) {
+  let products = myStore.getListProduct();
+  let product = products.find(p => p.id === id);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  
   if (!currentUser || currentUser.role !== "viewer") {
     alert("Chỉ người dùng được phép mua.");
     return;
   }
-
-  let products = myStore.getListProduct();
-  let product = products.find(p => p.id === id);
 
   if (product.quantity <= 0) {
     alert("Sản phẩm đã hết hàng!");
     return;
   }
 
-  // Trừ số lượng đi 1
+  // Giảm số lượng tồn kho
   product.quantity -= 1;
   myStore.update(product.id, product);
 
-  // Lưu lịch sử mua
+  // Lưu vào lịch sử mua
   let purchases = JSON.parse(localStorage.getItem("purchases")) || [];
-  let existing = purchases.find(p => p.username === currentUser.username && p.productId === product.id);
-  if (existing) {
-    existing.quantity += 1;
-  } else {
-    purchases.push({
-      username: currentUser.username,
-      productId: product.id,
-      productName: product.name,
-      productImage: product.image,
-      size: product.size,
-      price: product.price,
-      quantity: 1
-    });
-  }
+  purchases.push({
+    username: currentUser.username,
+    productId: product.id,
+    productName: product.name,
+    price: product.price,
+    size: product.size,
+    image: product.image,
+    quantity: 1,
+    time: new Date().toLocaleString()
+  });
   localStorage.setItem("purchases", JSON.stringify(purchases));
 
-  // Hiển thị lại giao diện
-  viewPurchaseDetail(product, currentUser.username);
+  // Hiển thị hóa đơn ngay
+  showBill(currentUser.username, product);
 }
 
 function viewPurchaseDetail(product, username) {
@@ -378,7 +376,7 @@ function viewPurchaseInfo() {
       <tr>
         <td>${p.username}</td>
         <td>${p.productName}</td>
-        <td><img src="${p.productImage}" width="100"></td>
+        <td><img src="${p.image}" width="100"></td>
         <td>${p.size}</td>
         <td>${p.price}</td>
         <td>${p.quantity}</td>
@@ -389,5 +387,41 @@ function viewPurchaseInfo() {
   html += `</table><br><center><button onclick="navigateToHomePage()">Quay lại</button></center>`;
   document.getElementById("ux").innerHTML = html;
 }
+
+function showBill(username, product) {
+  const billHTML = `
+    <h2>Hóa đơn mua hàng</h2>
+    <div id="bill-content" style="width: 300px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc;">
+      <p><strong>Người mua:</strong> ${username}</p>
+      <p><strong>Tên sản phẩm:</strong> ${product.name}</p>
+      <p><strong>Size:</strong> ${product.size}</p>
+      <p><strong>Giá:</strong> ${product.price.toLocaleString()} VND</p>
+      <img src="${product.image}" style="width: 100px; height: auto; border-radius: 10px;">
+      <p><strong>Ngày mua:</strong> ${new Date().toLocaleString()}</p>
+    </div>
+    <br>
+    <div style="text-align: center;">
+      <button onclick="exportBill()">Xuất bill PDF</button>
+      <br>
+      <button onclick="navigateToHomePage()">Trang chủ</button>
+    </div>
+  `;
+  document.getElementById("ux").innerHTML = billHTML;
+}
+
+function exportBill() {
+  const element = document.getElementById("bill-content");
+  const opt = {
+    margin: 0.5,
+    filename: `hoa_don_${new Date().getTime()}.pdf`,
+    // image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+
+  html2pdf().set(opt).from(element).save();
+}
+
+
 
 navigateToHomePage();

@@ -9,46 +9,46 @@ class Store {
     this.name = name;
   }
 
-getListSearch(nameSearch, priceStart, priceEnd, sizeFilter) {
-  let listOutput = [];
+  getListSearch(nameSearch, priceStart, priceEnd, sizeFilter) {
+    let listOutput = [];
 
-  // Bước 1: lọc theo tên
-  for (let i = 0; i < this.listProduct.length; i++) {
-    let product = this.listProduct[i];
-    let productName = product.name.toLowerCase();
-    let searchName = nameSearch.toLowerCase();
+    // Bước 1: lọc theo tên
+    for (let i = 0; i < this.listProduct.length; i++) {
+      let product = this.listProduct[i];
+      let productName = product.name.toLowerCase();
+      let searchName = nameSearch.toLowerCase();
 
-    if (productName.includes(searchName)) {
-      listOutput.push(product);
-    }
-  }
-
-  // Bước 2: lọc theo giá
-  let listOutput2 = [];
-  for (let i = 0; i < listOutput.length; i++) {
-    let product = listOutput[i];
-    let price = Number(product.price); // ép kiểu giá về số
-    if (price >= priceStart && price <= priceEnd) {
-      listOutput2.push(product);
-    }
-  }
-
-  // Bước 3: lọc theo size
-  let listOutput3 = [];
-
-  if (sizeFilter === "") {
-    listOutput3 = listOutput2;
-  } else {
-    for (let i = 0; i < listOutput2.length; i++) {
-      let product = listOutput2[i];
-      if (product.size === sizeFilter) {
-        listOutput3.push(product);
+      if (productName.includes(searchName)) {
+        listOutput.push(product);
       }
     }
-  }
 
-  return listOutput3;
-}
+    // Bước 2: lọc theo giá
+    let listOutput2 = [];
+    for (let i = 0; i < listOutput.length; i++) {
+      let product = listOutput[i];
+      let price = Number(product.price); // ép kiểu giá về số
+      if (price >= priceStart && price <= priceEnd) {
+        listOutput2.push(product);
+      }
+    }
+
+    // Bước 3: lọc theo size
+    let listOutput3 = [];
+
+    if (sizeFilter === "") {
+      listOutput3 = listOutput2;
+    } else {
+      for (let i = 0; i < listOutput2.length; i++) {
+        let product = listOutput2[i];
+        if (product.size === sizeFilter) {
+          listOutput3.push(product);
+        }
+      }
+    }
+
+    return listOutput3;
+  }
 
   getListProduct() {
     return this.listProduct;
