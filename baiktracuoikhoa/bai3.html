@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<html>
 <head>
   <meta charset="UTF-8">  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bai 3</title>
-
-  <style>
+ <style>
     table, th, td {
       border: 1px solid black;
       border-collapse: collapse;
@@ -20,6 +17,7 @@
 <body>
 
   <h2>Thêm Sổ Tiết Kiệm</h2>
+
   <label for="maSo">Mã sổ (tối đa 5 ký tự):</label>
   <input type="text" id="maSo" maxlength="5"><br><br>
 
@@ -39,6 +37,7 @@
   <input type="number" id="soTienGui"><br><br>
 
   <button onclick="themSoTietKiem()">Thêm sổ</button>
+  <button onclick="xoaSoTietKiem()">Xóa sổ</button>
 
   <h2>Danh sách sổ tiết kiệm</h2>
   <table id="dsSoTietKiem">
@@ -70,26 +69,66 @@
     let danhSach = [];
 
     function themSoTietKiem() {
-      let maSo = document.getElementById("maSo").value.trim();
-      let loaiTietKiem = document.getElementById("loaiTietKiem").value.trim();
-      let hoTen = document.getElementById("hoTen").value.trim();
-      let cmnd = parseInt(document.getElementById("cmnd").value);
-      let ngayMoSo = document.getElementById("ngayMoSo").value;
-      let soTienGui = parseFloat(document.getElementById("soTienGui").value);
+      while (true) {
+        let maSo = document.getElementById("maSo").value.trim();
+        let loaiTietKiem = document.getElementById("loaiTietKiem").value.trim();
+        let hoTen = document.getElementById("hoTen").value.trim();
+        let cmnd = document.getElementById("cmnd").value.trim();
+        let ngayMoSo = document.getElementById("ngayMoSo").value;
+        let soTienGui = document.getElementById("soTienGui").value.trim();
 
-      if (!maSo || !loaiTietKiem || !hoTen || isNaN(cmnd) || !ngayMoSo || isNaN(soTienGui)) {
-        alert("Vui lòng nhập đầy đủ và đúng thông tin.");
+        if (!maSo || !loaiTietKiem || !hoTen || !cmnd || !ngayMoSo || !soTienGui) {
+          alert("Vui lòng nhập đầy đủ thông tin!");
+          return;
+        }
+
+        if (maSo.length > 5 || loaiTietKiem.length > 10 || hoTen.length > 30) {
+          alert("Một số trường vượt quá giới hạn ký tự cho phép!");
+          return;
+        }
+
+        if (isNaN(cmnd) || isNaN(soTienGui) || Number(soTienGui) <= 0) {
+          alert("CMND và Số tiền gửi phải là số hợp lệ!");
+          return;
+        }
+
+        if (danhSach.some(s => s.maSo === maSo)) {
+          alert("Mã sổ đã tồn tại. Vui lòng nhập mã khác!");
+          return;
+        }
+
+        let s = new SoTietKiem(maSo, loaiTietKiem, hoTen, parseInt(cmnd), ngayMoSo, parseFloat(soTienGui));
+        danhSach.push(s);
+        alert("Đã thêm sổ tiết kiệm thành công!");
+        hienThiDanhSach();
         return;
       }
+    }
 
-      let s = new SoTietKiem(maSo, loaiTietKiem, hoTen, cmnd, ngayMoSo, soTienGui);
-      danhSach.push(s);
-      hienThiDanhSach();
+    function xoaSoTietKiem() {
+      while (true) {
+        let maCanXoa = prompt("Nhập mã sổ cần xóa:");
+        if (!maCanXoa) return;
+
+        let index = danhSach.findIndex(s => s.maSo === maCanXoa);
+        if (index === -1) {
+          alert("Mã sổ không tồn tại. Vui lòng nhập lại.");
+          continue;
+        }
+
+        let xacNhan = confirm(`Bạn có chắc muốn xóa sổ tiết kiệm với mã "${maCanXoa}" không?`);
+        if (xacNhan) {
+          danhSach.splice(index, 1);
+          alert("Đã xóa thành công!");
+          hienThiDanhSach();
+        }
+        return;
+      }
     }
 
     function hienThiDanhSach() {
       let tbody = document.querySelector("#dsSoTietKiem tbody");
-      tbody.innerHTML = ""; 
+      tbody.innerHTML = "";
 
       for (let s of danhSach) {
         let row = `<tr>
