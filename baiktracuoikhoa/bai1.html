@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <h3>Nhập mảng số nguyên (tối đa 50 phần tử, cách nhau bởi dấu phẩy):</h3>
+  <input type="text" id="inputArray" placeholder="Nhập số (VD: 3,5,8,10,13)">
+  <button onclick="xuLyMang()">Xử lý</button>
+
+  <h4>Mảng a:</h4>
+  <p id="arrayA"></p>
+
+  <h4>Mảng b (các số nguyên tố):</h4>
+  <p id="arrayB"></p>
+
+  <script>
+    
+    function kTraSoNguyenTo(n) {
+      if (n < 2) {
+        return false;
+      }
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i == 0) {
+            return false;
+        }
+      }
+      return true;
+    }
+
+    function xuLyMang() {
+      let input = document.getElementById("inputArray").value;
+      let a = input.split(",").map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+
+      if (a.length > 50) {
+        alert("Vui lòng nhập tối đa 50 phần tử.");
+        return;
+      }
+
+      let b = a.filter(kTraSoNguyenTo);
+      document.getElementById("arrayA").textContent = "[" + a.join(", ") + "]";
+      document.getElementById("arrayB").textContent = "[" + b.join(", ") + "]";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bai 2</title>
+</head>
+
+<body>
+    <button onclick="soSanhPhanSo()">So sánh phân số</button>
+
+    <script>
+        function soSanhPhanSo() {
+            let a = +prompt("Nhập tử số phân số thứ nhất (a): ");
+            let b = +prompt("Nhập mẫu số phân số thứ nhất (b): ");
+            let c = +prompt("Nhập tử số phân số thứ hai (c): ");
+            let d = +prompt("Nhập mẫu số phân số thứ hai (d): ");
+
+            if (b === 0 || d === 0) {
+                alert("Mẫu số không hợp lệ (phải khác 0)");
+                return;
+            }
+
+            if (a * d === b * c) {
+                alert("Hai phân số bằng nhau");
+            } else {
+                alert("Hai phân số không bằng nhau");
+            }
+        }
+    </script>
+</body>
+
+</html>
